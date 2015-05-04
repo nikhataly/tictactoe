@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <title>My Tic Tac Toe</title>
+</head>
+<body>
+<h1>My Tic Tac Toe</h1>
+<table>
+
+
+  <tr>
+    <td id="1"></td>
+    <td id="2"></td>
+    <td id="3"></td>
+  </tr>
+
+  <tr>
+    <td id="4"></td>
+    <td id="5"></td>
+    <td id="6"></td>
+  </tr>
+
+  <tr>
+    <td id="7"></td>
+    <td id="8"></td>
+    <td id="9"></td>
+  </tr>
+
+</table>
+</body>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
+<script>
+
+var count;
+
+initialize()
+
+function initialize() {
+
+count = 0
+
+$ ('td').html('')
+
+$('td').on('click', function() {
+  $("this").off('click')
+  console.log("Move: "+ count)
+  if(count % 2 == 0) {
+    $(this).html("X");
+    console.log("X moved")
+  }else {
+    $(this).html("O");
+    console.log("O moved")
+  }
+  checkBoard();
+  count++
+  });
+
+}
+
+function game_finished(message){
+   alert(message);
+   initialize()
+  }
+
+function checkBoard() {
+  var wins = [ [$("#1"), $("#2"), $("#3")], [$("#4"), $("#5"), $("#6")], [$("#7"), $("#8"), $("#9")], [$("#1"), $("#4"), $("#7")], [$("#2"), $("#5"), $("#8")], [$("#3"), $("#6"), $("#9")], [$("#1"), $("#5"), $("#9")], [$("#3"), $("#5"), $("#7")] ]
+
+  for(var i = 0; i < wins.length; i++) {
+    var w = wins[i];
+    var checkX = w[0].html() == "X" && w[1].html() == "X" && w[2].html() == "X";
+    var checkO = w[0].html() == "O" && w[1].html() == "O" && w[2].html() == "O";
+
+    if (checkX){
+      game_finished("X wins!");
+      return;
+    } else if (checkO) {
+      game_finished("O wins!");
+      return;
+    }
+    }
+
+  if (count === 8){
+    game_finished("Draw!");
+  }
+}
+
+
+</script>
+
+</html>
+
+
+
+
