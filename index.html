@@ -2,8 +2,10 @@
 <html>
 <head>
   <link rel="stylesheet" type="text/css" href="style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
   <title>My Tic Tac Toe</title>
 </head>
+
 <body>
 <h1>My Tic Tac Toe</h1>
 <table>
@@ -30,42 +32,44 @@
 </table>
 </body>
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
 
 <script>
 
-var count;
 
-initialize()
+$(document).ready(function() {
 
-function initialize() {
+function initGame() {
 
-count = 0
+  var count = 0;
 
-$ ('td').html('')
+  $("td").off("click");
+  $("td").html("");
 
-$('td').on('click', function() {
-  $("this").off('click')
-  console.log("Move: "+ count)
-  if(count % 2 == 0) {
-    $(this).html("X");
-    console.log("X moved")
-  }else {
-    $(this).html("O");
-    console.log("O moved")
-  }
-  checkBoard();
-  count++
+  $("td").on("click", function() {
+
+    console.log(count)
+    if(count % 2 == 0) {
+      $(this).html("X");
+    } else {
+      $(this).html("O");
+    };
+    $(this).off('click');
+
+    checkBoard(count);
+    count++;
+
   });
 
 }
 
-function game_finished(message){
+function gameFinished(message){
    alert(message);
-   initialize()
-  }
+   initGame();
+}
 
-function checkBoard() {
+function checkBoard(count) {
+
   var wins = [ [$("#1"), $("#2"), $("#3")], [$("#4"), $("#5"), $("#6")], [$("#7"), $("#8"), $("#9")], [$("#1"), $("#4"), $("#7")], [$("#2"), $("#5"), $("#8")], [$("#3"), $("#6"), $("#9")], [$("#1"), $("#5"), $("#9")], [$("#3"), $("#5"), $("#7")] ]
 
   for(var i = 0; i < wins.length; i++) {
@@ -74,20 +78,22 @@ function checkBoard() {
     var checkO = w[0].html() == "O" && w[1].html() == "O" && w[2].html() == "O";
 
     if (checkX){
-      game_finished("X wins!");
+      gameFinished("X wins!");
       return;
     } else if (checkO) {
-      game_finished("O wins!");
+      gameFinished("O wins!");
       return;
     }
-    }
+  }
 
   if (count === 8){
-    game_finished("Draw!");
+    gameFinished("Draw!");
   }
 }
 
+initGame();
 
+});
 </script>
 
 </html>
